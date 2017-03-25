@@ -1,0 +1,206 @@
+#include <iostream>
+using namespace std;
+#define DEFAULT_CAPACITY 5
+#pragma warning(disable:4996)
+class String
+{
+public:
+	String(const char*s="")//构造函数
+	{
+		if (NULL == s)
+		{
+			_pStr = new char[1];
+			*_pStr = '\0';
+		}
+		else
+		{
+			_pStr = new char[strlen(s) + 1];
+			while (*_pStr++ = *s++);//最简单的复制两个字符串的方法
+			_size = strlen(s);
+			_capacity = DEFAULT_CAPACITY;
+		}
+	}
+	String(const String&s)//拷贝构造函数
+		:_pStr(new char[strlen(s._pStr) + 1])
+		, _size(s._size)
+		,_capacity(s._capacity)
+
+	{
+		strcpy(_pStr, s._pStr);
+	}
+	~String()
+	{
+		if (NULL != _pStr)
+		{
+			delete[] _pStr;
+			_pStr = NULL;
+		}
+	}
+	String&operator=(const String& s)
+	{
+		if (this != &s)
+		{
+			char*temp = new char[strlen(s._pStr) + 1];//strlen
+			String temp_s(*this);
+			while (*temp++ = *temp_s._pStr++);
+			_size = s._size;
+			_capacity = s._capacity;
+			delete[] _pStr;
+			_pStr = NULL;
+			_pStr = temp;
+		}
+		return *this;
+	}
+	size_t Size()const;//字节数
+	size_t Lengh()const;//字符数
+	char& operator[](size_t index);
+	const char& operator[](size_t index)const;
+	bool operator>(const String& s);
+	bool operator<(const String& s);
+	bool operator==(const String& s);
+	bool operator!=(const String& s);
+	void Copy(const String& s);
+	bool strstr(const String& s);
+	String& operator+=(const String& s);
+
+private:
+	char* _pStr;
+	size_t _size;
+	size_t _capacity;
+};
+size_t String:: Size()const
+{
+	return _size;
+}
+size_t String::Lengh()const
+{
+	return _capacity;
+}
+char& String::operator[](size_t index)
+{
+	return _pStr[index];
+}
+const char& String::operator[](size_t index)const
+{
+	return _pStr[index];
+}
+bool String::operator>(const String& s)
+{
+	char* pstr1 = _pStr;
+	char* pstr2 = s._pStr;
+	while(*pstr1 == *pstr2)
+	{
+		pstr1++;
+		pstr2++;
+	}
+	if (*pstr1 > *pstr2)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+bool String::operator<(const String& s)
+{
+	char* pstr1 = _pStr;
+	char* pstr2 = s._pStr;
+	while (*pstr1 == *pstr2)
+	{
+		pstr1++;
+		pstr2++;
+	}
+	if (*pstr1 <  *pstr2)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+bool String::operator==(const String& s)
+{
+	char* pstr1 = s._pStr;
+	char* pstr2 = _pStr;
+	while ((*pstr1 == *pstr2) && (*pstr1 != '\0' || *pstr2 != '\0'))
+	{
+		pstr1++;
+		pstr2++;
+	}
+	if (*pstr1 == *pstr2)
+		return true;
+	else
+		return false;
+}
+bool String::operator!=(const String& s)
+{
+	if (_pStr == s._pStr)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+void String::Copy(const String& s)
+{
+	char *pTemp1 = _pStr;
+	char *pTemp2 = s._pStr;
+	char* pTemp = NULL;
+	if ((*this).Size() >= s.Size())//直接覆盖
+	{
+		while (*pTemp1++ = *pTemp2++);
+	}
+	else
+	{
+		pTemp1 = new char[s.Size() + 1];
+		pTemp = pTemp1;
+		while (*pTemp1++ = *pTemp2++);
+		delete[]_pStr;
+		_pStr = pTemp;
+	}
+}
+bool String::strstr(const String& s)
+{
+	char*pTemp1 = _pStr;
+	char*pTemp2 = s._pStr;
+
+	while ((*pTemp1 != '\0') && (*pTemp2 != '\0'))
+	{
+
+		while ((*pTemp1 == *pTemp2) && (*pTemp1 != '\0') && (*pTemp2 != '\0'))
+		{
+			pTemp1++;
+			pTemp2++;
+		}
+		pTemp1++;
+
+	}
+	if (*pTemp2 == '\0')
+	{
+		return true;
+	}
+	else
+	{
+
+		return false;
+	}
+}
+String& String::operator+=(const String& s)
+{
+	char*pTemp = new char[Size() + s.Size() + 1];
+	char* pTemp1 = _pStr;
+	char *pTemp2 = s._pStr;
+
+	char*pTemp3 = pTemp;
+	while (*pTemp++ = *pTemp1++);
+	pTemp -= 1;
+	while (*pTemp++ = *pTemp2++);
+	delete[]_pStr;
+
+	_pStr = pTemp3;
+	return *this;
+}
