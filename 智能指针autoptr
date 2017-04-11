@@ -1,0 +1,77 @@
+template<class T>
+struct Auto_ptrRef
+{
+    Auto_ptrRef(T* ptr)
+        :_ptr(ptr)
+    {}
+    //没有给析构函数
+    T* _ptr;
+};
+template<class T>
+class Auto_ptr
+{
+public:
+    //构造函数
+    Auto_ptr(T* ptr = NULL)
+        :_ptr(ptr)
+    {
+        cout << "Auto_ptr()" << endl;
+    }
+    //拷贝构造函数,此处为非const
+    Auto_ptr(Auto_ptr<T>& ap)
+        :_ptr(ap._ptr)
+    {
+        cout << "Auto_ptr(Auto_ptr&)" << endl;
+        ap._ptr = NULL;
+    }
+    Auto_ptr<T>& operator = (Auto_ptr<T>& ap)//赋值运算符重载
+    {
+        if (this != &ap)
+        {
+            if (_ptr)
+            {
+                delete _ptr;
+            }
+            _ptr = ap._ptr;
+            ap._owns = NULL;
+        }
+        return *this;
+    }
+    ~Auto_ptr()//析构函数
+    {
+        if (_ptr)
+        {
+            delete _ptr;
+            _ptr = NULL;
+        }
+    }
+    //为了使智能指针可以像一般指针一样使用，所以重载以下函数
+    T* Get()
+    {
+        return _ptr;
+    }
+    T& operator*()
+    {
+        return *_ptr;
+    }
+    T* operator->()
+    {
+        return _ptr;
+    }
+    //与第一第二种不同的是多了俩个类型转换
+    //相当于类型转换
+    operator Auto_ptr<T>()
+    {
+        return *this;
+    }
+    //也是类型转换转换成顶层的类
+    template<class T1>
+    operator Auto_ptrRef<T1>()
+    {
+        Auto_ptrRef<T1> temp(_ptr);
+        _ptr = NULL;
+        return temp;
+    }
+private:
+    T* _ptr;
+};
