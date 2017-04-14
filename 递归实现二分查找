@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+int BinarySearch(int* array, int left, int right, int data)
+{
+	if (array == NULL || data<left || data>right)
+		return -1;
+	if (left < right)
+	{
+		int mid = left + ((right - left) >> 1);
+		if (array[mid] == data)
+			return mid;
+		else if (data < array[mid])
+		{
+			BinarySearch(array, left, mid, data);
+			return 1;
+		}
+		else
+		{
+			BinarySearch(array, mid + 1, right, data);
+			return 1;
+		}
+	}
+	return -1;
+}
+int main()
+{
+	int arr[] = { 0,1,2,3,4,5,6,7,8,9 };
+	int left = 0;
+	int right = sizeof(arr) / sizeof(arr[0]) - 1;//下标    
+	cout << BinarySearch(arr, left, right, 10) << endl;
+	return 0;
+}
