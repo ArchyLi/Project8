@@ -1,0 +1,97 @@
+template<class T>
+class SymmetricMatrix
+{
+public:
+	SymmetricMatrix(T* pData, size_t N)
+		:_pData(new T[N*(N + 1) / 2])
+		,_row(N)
+		,_col(N)
+	{
+		size_t index = 0;
+		for (size_t i = 0; i < N; ++i)
+		{
+			for (size_t j = 0; j < N; ++j)
+			{
+				if (i >= j)
+				{
+					_pData[index++] = pData[i*N + j];
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+	}
+	T& Acess(int row, int col)
+	{
+		{
+			if (row < col)
+			{
+				swap(row, col);
+			}
+			return _pData[row*(row + 1) / 2 + col];
+		}
+	}
+	const T& Acess(int row, int col)const
+	{
+		if (row < col)
+		{
+			swap(row, col);
+		}
+		return _pData[row*(row + 1) / 2 + col]; 
+	}
+	~SymmetricMatrix()
+	{
+		if (_pData)
+		{
+			delete[] _pData;
+		}
+	}
+	void Display()
+	{
+		for (size_t i = 0; i < _row; ++i)
+		{
+			for (size_t j = 0; j < _row; ++j)
+			{
+				if (i >= j)
+				{
+					cout << _pData[i*(i + 1) / 2 + j] << " ";
+				}
+				else
+				{
+					cout << _pData[j*(j + 1) / 2 + i] << " ";
+				}
+			}
+
+			cout << endl;
+		}
+	}
+private:
+	T* _pData;
+	size_t _row;
+	size_t _col;
+};
+
+void Test()
+{
+	int array[6][6] =
+	{
+		{ 0, 1, 2, 3, 4, 5},
+		{ 1, 0, 1, 2, 3 ,4},
+		{ 2, 1, 0, 1, 2 ,3},
+		{ 3, 2, 1, 0, 1 ,2},
+		{ 4, 3, 2, 1, 0 ,1},
+		{ 5, 4, 3, 2, 1 ,0},
+	};
+		
+	SymmetricMatrix<int> sm((int*)array, 6);
+	sm.Display();
+}
+
+int main()
+{
+	Test();
+
+	return 0;
+}
