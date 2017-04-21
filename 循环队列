@@ -1,0 +1,91 @@
+#include<iostream>
+using namespace std;
+
+template<class T>
+class Queue
+{
+public:
+	Queue(size_t capacity = 5)
+		:_rear(0)
+		,_front(0)
+		,_count(0)
+		,_capacity(capacity)
+	{
+		_pData = new T[_capacity];
+	}
+	void Push(const T& x)
+	{
+		if (_count == _capacity)
+		{
+			cout << "已满" << endl;
+			return;
+		}
+		_pData[_rear] = x;
+		_rear = (_rear + 1) % _capacity;
+		_count++;
+	}
+	void Pop()
+	{
+		if (!Empty())
+		{
+			cout << "此队列以空" << endl;
+			return;
+		}
+		_count--;
+		_rear = (_rear + 1) % _capacity;
+	}
+	T& Front()
+	{
+		return _pData[_frount];
+	}
+	const T& Front()const
+	{
+		return _pData[_frount];
+	}
+	T& Back()
+	{
+		return _pData[(_real-1)%_capacity];
+	}
+	const T& Back()const
+	{
+		return _pData[(_real - 1) % _capacity];
+	}
+	size_t Size()const
+	{
+		return _count;
+	}
+	bool Empty()const
+	{
+		if (_count == 0)
+		{
+			return 0;
+		}
+		return 1;
+	}
+	~Queue()
+	{
+		delete[] _pData;
+	}
+
+private:
+	T* _pData;
+	size_t _capacity;
+	size_t _front;
+	size_t _rear;
+	size_t _count;
+};
+int main()
+{
+	Queue<int> T;
+	T.Push(1);
+	T.Push(1);
+	T.Push(1);
+	T.Push(1);
+	T.Push(1);
+	T.Push(1);
+	T.Push(1);
+	cout << T.Size() << endl;
+	T.Pop();
+	cout << T.Size() << endl;
+	return 0;
+}
