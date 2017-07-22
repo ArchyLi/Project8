@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+bool FindTwoFirst(char* arry,int len)
+{
+	int arr[256] = {};
+	for (int i = 0; i < len; i++)
+	{
+		arr [arry[i]]++;//卡在这里了，笨死，想到类似哈希表的表达方式
+	}
+	for (int i = 0; i <len; i++)
+	{
+		if (arr[arry[i]] == 2)
+		{
+			cout << "找到了，是：" << arry[i] << endl;
+			return true;
+		}
+	}
+	return false;
+}
+int main()
+{
+	char a[] = { "abcdefabcdefabc" };
+	int len = strlen(a);
+	bool flag = FindTwoFirst(a, len);
+	if(!flag)
+		cout << "不存在第一次出现两个相同的字符。" << endl;
+	return 0;
+}
