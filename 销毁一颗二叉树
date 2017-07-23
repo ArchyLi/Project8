@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+typedef struct Node
+{
+	struct Node *Left;
+	struct Node *Right;
+	int data;
+}Node, *PNode;
+int Lengh(Node* pHead)
+{
+	int left = 0;
+	int right = 0;
+	if (!pHead)
+		return 0;
+	else
+	{
+		left = Lengh(pHead->Left);
+		right = Lengh(pHead->Right);
+		return (left > right ? left : right) + 1;
+	}
+}
+int Destroy(Node* pHead)
+{
+	if (pHead == NULL)
+	{
+		return;
+	}
+	Destroy(pHead->Left);
+	Destroy(pHead->Right);
+	free(pHead);
+}
