@@ -1,0 +1,42 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+typedef int T;
+class stackMin
+{
+public:
+	stackMin()
+	{}
+	~stackMin()
+	{}
+	void Push(T data)
+	{
+		cout << "s1.push(" << data << ")" << endl;
+		s1.push(data);
+		if (s2.empty() || data <= s2.top())
+		{
+			cout << "s2.push(" << data << ")" << endl;
+			s2.push(data);
+		}
+	}
+	void Pop()
+	{
+		if (s1.top() == s2.top())
+		{
+			cout << "s2.pop(" << s2.top() << ")" << endl;
+			s2.pop();
+		}
+		cout << "s1.pop(" << s1.top() << ")" << endl;
+		s1.pop();
+	}
+	T Min()
+	{
+		if (!s2.empty())
+		{
+			return s2.top();
+		}
+	}
+private:
+	stack<T> s1;
+	stack<T> s2;
+};
