@@ -1,0 +1,11 @@
+#include <iostream>
+using namespace std;
+int locateo(int N) 
+{
+	 int num = 0; 
+	 while (N != 0) {
+			N >>= 1;
+	         num += N;
+		}
+	 return num + 1;
+}
