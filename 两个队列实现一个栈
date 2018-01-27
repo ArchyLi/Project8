@@ -1,0 +1,72 @@
+    #include<iostream>  
+    #include <queue>  
+    using namespace std;  
+    template <typename T>  
+    class Cstack  
+    {  
+    public:  
+        Cstack(void)  
+        {}  
+        ~Cstack(void)  
+        {}  
+        void appendTail(const T&node);  
+        T deleteHead();  
+    private:  
+        queue<T> queue1;  
+        queue<T> queue2;  
+    };  
+    template<class T>  
+    void Cstack<T>::appendTail(const T& node)  
+    {  
+        if (!queue1.empty())  
+        {  
+            queue1.push(node);  
+        }  
+        else  
+        {  
+            queue2.push(node);  
+        }  
+    }  
+    template<class T>  
+    T Cstack<T>::deleteHead()  
+    {  
+        int ret = 0;  
+        if (queue1.empty())  
+        {  
+            int i = queue2.size();  
+            while (i > 1)//将q2队列中的数据pop到只剩一个  
+            {  
+                queue1.push(queue2.front());  
+                queue2.pop();  
+                --i;  
+            }  
+            ret = queue2.front();  
+            queue2.pop();  
+        }  
+        else  
+        {  
+            int i = queue1.size();  
+            while (i > 1)  
+            {  
+                queue2.push(queue1.front());  
+                queue1.pop();  
+                --i;  
+            }  
+            ret = queue1.front();  
+            queue1.pop();  
+        }  
+        return ret;  
+    }  
+      
+    int main() {  
+        Cstack<int> q1;  
+        q1.appendTail(1);  
+        q1.appendTail(2);  
+        q1.appendTail(3);  
+        q1.appendTail(4);  
+        q1.deleteHead();  
+        q1.deleteHead();  
+        q1.deleteHead();  
+        q1.deleteHead();  
+        return 0;  
+    }  
