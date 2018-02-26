@@ -1,0 +1,8 @@
+void PrintListFromTailHead(Node* phead)  
+{  
+    if (phead)  
+    {  
+        PrintListFromTailHead(phead->next);//此处开始递归调用  
+        count << phead->_data << " ";  
+    }  
+} 
