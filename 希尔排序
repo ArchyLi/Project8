@@ -1,0 +1,26 @@
+void ShellSort(int* arr,int len)
+{
+    //这个写法。
+    int gap = len;
+    //大于1以上排序
+    while (gap > 1)
+    {
+        //每次gap减小即可，一直到1为止。
+        gap = gap / 3 + 1;
+        for (size_t i = 0; i < len - gap; ++i)
+        {
+            //由于上面的for循环直接判断了i不等于arr[i+gap]
+            //并且我们确定gap的方式导致了arr[i+gap]一定存在
+            int end = i;
+            int j = arr[end + gap];
+            //注意这里一定要大于等于0
+            //自己在第一次写的时候没有等于0
+            while (end >= 0 && arr[end] > j)
+            {
+                arr[end + gap] = arr[end];
+                end -= gap;
+            }
+            arr[end + gap] = j;
+        }
+    }
+}
