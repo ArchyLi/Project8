@@ -1,0 +1,16 @@
+void InsertSort(int* a,int len)
+{
+    assert(a);
+    for (size_t i = 1; i < len; i++)
+    {
+        int end = a[i];
+        size_t j = i;
+        for (; j > 0 && a[j - 1] > end; --j)
+        {
+            //挑选插入位置
+            a[j] = a[j - 1];
+        }
+        //插牌的过程
+        a[j] = end;
+    }
+}
