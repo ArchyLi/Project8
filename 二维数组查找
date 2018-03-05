@@ -1,0 +1,25 @@
+bool Find(int* array, int rows, int columns, int data)
+{
+    bool flag = false;
+    if (array != NULL&&rows > 0 && columns > 0)
+    {
+        int row = 0;
+        int column = columns - 1;
+        if (data > array[0] && data < array[rows*columns + column])
+        {
+            while (row < rows&&column>=0)
+            {
+                if (array[row*columns + column] > data)
+                    --column;
+                else if (array[row*columns + column] == data)
+                {
+                    flag = true;
+                    return flag;
+                }
+                else
+                    ++row;
+            }
+        }
+    }
+    return flag;
+}
