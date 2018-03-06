@@ -1,0 +1,16 @@
+void PartSort(ihnt * arr,int begin,int end)
+{
+    int temp=a[len];
+    while(begin<end)
+    {
+        while(begin<end&&a[begin]<=key)
+         ++begin;
+
+            a[tem2]=a[begin];
+
+        while(a[end]<temp)
+            --end;
+            a[tem2]=a[end];
+    }
+    a[begin]=a[len];
+}
