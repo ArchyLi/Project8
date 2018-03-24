@@ -1,0 +1,15 @@
+int getHeight(TreeNode *root)  
+{  
+    if(root==NULL) return 0;  
+    int lh=getHeight(root->left);  
+    int rh=getHeight(root->right);  
+    int height=(lh<rh)?(rh+1):(lh+1);  // 记住：要加上根节点那一层，高度+1   
+    return height;  
+}  
+bool IsBalanced_Solution(TreeNode* pRoot) {  
+    if(pRoot==NULL) return true;  
+    int lh=getHeight(pRoot->left);  
+    int rh=getHeight(pRoot->right);  
+    if(lh-rh>1 || lh-rh<-1)   return false;  
+    else return (IsBalanced_Solution(pRoot->left) && IsBalanced_Solution(pRoot->right)); // 继续递归判断      
+}  
