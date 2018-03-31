@@ -1,0 +1,15 @@
+//非递归的方法，思想很好，但是时间复杂度是O(n2)太长了。
+bool VerifySquenceOfBST(vector<int> sequence) {
+	int size = sequence.size();
+	if (size == 0)return false;
+	int i = 0;
+	while (--size)
+	{
+		while (sequence[i++] < sequence[size]);
+		while (sequence[i++] > sequence[size]);
+		if (i < size)
+			return false;;
+		i = 0;
+	}
+	return true;
+}
